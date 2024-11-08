@@ -1,0 +1,53 @@
+import random
+import sys
+
+
+def main():
+    questions = 0
+    score = 0
+    level = get_level()
+    while questions < 10:
+        attempts = 0
+        x = generate_integer(level)
+        y = generate_integer(level)
+        z = x + y
+        while attempts < 3:
+            try:
+                answer = int(input(f"{x} + {y} = "))
+                if answer == z:
+                    score += 1
+                    break
+                else:
+                    print("EEE")
+                    attempts += 1
+            except ValueError:
+                print("EEE")
+                attempts += 1
+                pass
+        questions += 1
+        if attempts == 3:
+            print(f"{x} + {y} = {z}")
+    print("Score: "+ str(score))
+    sys.exit()
+
+
+def get_level():
+    userlevel = input("Level: ")
+    try:
+        level = int(userlevel)
+        if 1 <= level <= 3:
+            return(level)
+        else:
+            get_level()
+    except:
+        get_level()
+
+
+def generate_integer(level):
+    lowerLimit = 10 ** (level - 1)
+    upperLimit = (10 ** level) - 1
+    return random.randint(lowerLimit, upperLimit) if level > 1 else random.randint(0, upperLimit)
+
+
+if __name__ == "__main__":
+    main()

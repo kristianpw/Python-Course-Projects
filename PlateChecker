@@ -1,0 +1,35 @@
+def main():
+    plate = input("Plate: ")
+    if is_valid(plate.lower()):
+        print("Valid")
+    else:
+        print("Invalid")
+
+def is_valid(s):
+    if len(s) > 6 or len(s) < 2: ##checks that total length of input is between 2 and 6
+        return False
+    for c in s: ##checks for any non letter or numebr characters
+        if not c.isalpha():
+            if not c.isdigit():
+                return False
+    for i in range(2): ##checks that first 2 characters are letters
+        if not s[i].isalpha():
+            return False
+    i = 0
+    for c in s:
+        i += 1
+        if c.isdigit():
+            for j in range(i, len(s)):
+                if s[j].isalpha(): ##Checks if ANY characters after a number are a digit.
+                    return False
+           ## if s[i:len(s)].isalpha(): ##would check characters after a number. If ALL characters after a number were a letter, it'd reject. But I needed to check if ANY were letters.
+               ## return False
+            if c == "0": ##checks to see if the first number used is a 0. Checks all previous letters. If theyre all letters, 0 was the first number digit used.
+                if s[0:i-1].isalpha():
+                    return False
+
+    return True
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,18 @@
+import sys
+import requests
+
+if len(sys.argv)  != 2:
+    sys.exit("Missing command-line argument")
+
+try:
+    number = float(sys.argv[1])
+    try:
+        bitcoinvalue = requests.get("https://api.coindesk.com/v1/bpi/currentprice.json")
+        bitcoinjson = bitcoinvalue.json()
+        bitcoinfloat = bitcoinjson["bpi"]["USD"]["rate_float"]
+        amount = bitcoinfloat * number
+    except requests.RequestException:
+        sys.exit()
+    print(f"${amount:,.4f}")
+except ValueError:
+    sys.exit("Command-line argument is not a number")

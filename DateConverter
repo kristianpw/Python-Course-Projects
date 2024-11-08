@@ -1,0 +1,44 @@
+dates = {
+    "January": "01",
+    "Febuary": "02",
+    "March": "03",
+    "April": "04",
+    "May": "05",
+    "June": "06",
+    "July": "07",
+    "August": "08",
+    "September": "09",
+    "October": "10",
+    "November": "11",
+    "December": "12"
+}
+
+def main():
+    try:
+        date = input("Date: ").lower().strip().title()
+        datetable = date.split("/")
+        if len(datetable) == 1:
+            datetable = date.split(" ")
+        datecheck = dates.get(datetable[0])
+        if len(datetable) == 3:
+            if datecheck:
+                if datetable[1].endswith(","):
+                    datetable[1] = datetable[1].strip(",")
+                    daysint = int(datetable[1])
+                    if daysint > 31:
+                        main()
+                    else:
+                        print(f"{datetable[2]}-{datecheck}-{daysint:02}")
+                else:
+                    main()
+            else:
+                monthint = int(datetable[0])
+                daysint = int(datetable[1])
+                if monthint > 12 or daysint > 31:
+                    main()
+                else:
+                    print(f"{datetable[2]}-{monthint:02}-{daysint:02}")
+    except:
+        main()
+
+main()
